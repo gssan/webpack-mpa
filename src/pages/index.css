@@ -1,0 +1,12 @@
+@import url('./reset.css');
+
+body {
+  width: 100px;
+  height: 100px;
+  background-color: #333;
+  color: #fff;
+}
+
+a {
+  text-decoration: none;
+}

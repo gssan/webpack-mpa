@@ -1,6 +1,7 @@
 var path = require('path')
 var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
+var ExtractTextWebapckPlugin = require('extract-text-webpack-plugin')
 var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin
 
 module.exports = {
@@ -9,8 +10,8 @@ module.exports = {
     'product': './src/pages/product.js'
   },
   output: {
-    filename: '[name].bundle.js',
-    path: path.resolve(__dirname, './dist')
+    filename: '[name].[hash:4].[chunkhash:4].bundle.js',
+    path: path.resolve(__dirname, 'dist3')
   },
   module: {
     rules: [
@@ -18,6 +19,13 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: 'babel-loader'
+      },
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        use: ExtractTextWebapckPlugin.extract({
+          use: 'css-loader'
+        })
       }
     ]
   },
@@ -38,6 +46,7 @@ module.exports = {
       name: 'common',
       filename: 'core.bundle.js',
       minChunks: 2
-    })
+    }),
+    new ExtractTextWebapckPlugin('[name].[contenthash:4].css')
   ]
 }
